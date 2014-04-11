@@ -15,6 +15,11 @@ module Goodreads
     # params - Parameters hash
     #
     def request(path, params = {})
+      begin
+        return oauth_request(path, params) if @oauth_token
+      rescue
+        # Ignored, trying request without oauth token
+      end
       token = api_key || Goodreads.configuration[:api_key]
 
       fail(Goodreads::ConfigurationError, "API key required.") if token.nil?
