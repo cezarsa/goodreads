@@ -6,5 +6,10 @@ module Goodreads
       data = request("/user/show", id: id)
       Hashie::Mash.new(data["user"])
     end
+
+    def compare(id)
+      data = oauth_request('/user/compare', :id => id)
+      Hashie::Mash.new(data['compare'])
+    end
   end
 end
